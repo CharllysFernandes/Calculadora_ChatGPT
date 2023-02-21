@@ -158,106 +158,57 @@
             <button class="number" onclick="addToInput('7')">7</button>
             <button class="number" onclick="addToInput('8')">8</button>
             <button class="number" onclick="addToInput('9')">9</button>
-            <button class="operator" onclick="addToInput('+')">+</button>
+            <button class="operator" onclick="setOperator('+')">+</button>
             <button class="number" onclick="addToInput('4')">4</button>
             <button class="number" onclick="addToInput('5')">5</button>
             <button class="number" onclick="addToInput('6')">6</button>
-            <button class="operator" onclick="addToInput('-')">-</button>
+            <button class="operator" onclick="setOperator('-')">-</button>
             <button class="number" onclick="addToInput('1')">1</button>
             <button class="number" onclick="addToInput('2')">2</button>
             <button class="number" onclick="addToInput('3')">3</button>
-            <button class="operator" onclick="addToInput('*')">*</button>
+            <button class="operator" onclick="setOperator('*')">*</button>
             <button class="number" onclick="addToInput('0')">0</button>
             <button class="number" onclick="addToInput('.')">.</button>
             <button class="clear" onclick="clearInput()">C</button>
-            <button class="operator" onclick="addToInput('/')">/</button>
-            <button class="operator" onclick="addToInput('%')">%</button>
+            <button class="operator" onclick="setOperator('/')">/</button>
+            <button class="operator" onclick="setOperator('%')">%</button>
             <button class="equals" onclick="calculate()">=</button>
         </div>
 
         <div class="mode-toggle">
-            <button class="toggle-btn" onclick="toggleMode()">Dark Mode</button>
+            <button class="toggle-btn" onclick="toggleDarkMode()">Modo escuro</button>
         </div>
-
     </div>
+    
     <script>
-        const input = document.getElementById('input');
-        function addToInput(value) {
-            document.getElementById('input').value += value;
-        }
-
+        let input = "";
+        let operator = "";
 
         function addToInput(value) {
-            input.value += value;
+            input += value;
+            document.getElementById("input").value = input;
         }
 
         function clearInput() {
-            input.value = '';
+            input = "";
+            document.getElementById("input").value = "";
+        }
+
+        function setOperator(value) {
+            operator = value;
+            addToInput(value);
         }
 
         function calculate() {
-            input.value = eval(input.value);
+            let result = eval(input);
+            document.getElementById("input").value = result;
+            input = result;
+            operator = "";
         }
 
-        function toggleMode() {
-            document.body.classList.toggle('dark-mode');
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
         }
-
-        function toggleMode() {
-            const root = document.documentElement;
-            const calculator = document.querySelector('.calculator');
-            const display = document.querySelector('.display');
-            const buttons = document.querySelector('.buttons');
-            const toggleBtn = document.querySelector('.toggle-btn');
-
-            root.classList.toggle('dark-mode');
-            calculator.classList.toggle('dark-mode');
-            display.classList.toggle('dark-mode');
-            buttons.classList.toggle('dark-mode');
-
-            if (root.classList.contains('dark-mode')) {
-                toggleBtn.textContent = 'Light Mode';
-            } else {
-                toggleBtn.textContent = 'Dark Mode';
-            }
-        }
-
-        function addToInput(val) {
-            input.value += val;
-        }
-
-        function clearInput() {
-            input.value = '';
-        }
-
-        function calculate() {
-            try {
-                input.value = eval(input.value);
-            } catch (e) {
-                if (e instanceof SyntaxError) {
-                    input.value = 'Erro';
-                }
-            }
-        }
-
-        function toggleMode() {
-            document.body.classList.toggle('dark-mode');
-        }
-
-        function calculate() {
-            let input = document.getElementById('input').value;
-            if (input.includes('%')) {
-                let parts = input.split('%');
-                let num1 = parseFloat(parts[0]);
-                let num2 = parseFloat(parts[1]);
-                let result = num1 * (num2 / 100);
-                document.getElementById('input').value = result.toFixed(2);
-            } else {
-                document.getElementById('input').value = eval(input);
-            }
-        }
-
-
     </script>
 </body>
 
