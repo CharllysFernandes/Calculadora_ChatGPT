@@ -171,8 +171,10 @@
             <button class="number" onclick="addToInput('.')">.</button>
             <button class="clear" onclick="clearInput()">C</button>
             <button class="operator" onclick="addToInput('/')">/</button>
+            <button class="operator" onclick="addToInput('%')">%</button>
             <button class="equals" onclick="calculate()">=</button>
         </div>
+
         <div class="mode-toggle">
             <button class="toggle-btn" onclick="toggleMode()">Dark Mode</button>
         </div>
@@ -180,6 +182,10 @@
     </div>
     <script>
         const input = document.getElementById('input');
+        function addToInput(value) {
+            document.getElementById('input').value += value;
+        }
+
 
         function addToInput(value) {
             input.value += value;
@@ -236,6 +242,19 @@
 
         function toggleMode() {
             document.body.classList.toggle('dark-mode');
+        }
+
+        function calculate() {
+            let input = document.getElementById('input').value;
+            if (input.includes('%')) {
+                let parts = input.split('%');
+                let num1 = parseFloat(parts[0]);
+                let num2 = parseFloat(parts[1]);
+                let result = num1 * (num2 / 100);
+                document.getElementById('input').value = result.toFixed(2);
+            } else {
+                document.getElementById('input').value = eval(input);
+            }
         }
 
 
